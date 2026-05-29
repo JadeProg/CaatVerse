@@ -1,0 +1,112 @@
+/Users/jadepaz/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+'solc --version' running
+'solc @openzeppelin/=node_modules/@openzeppelin/ @chainlink/=node_modules/@chainlink/ contracts/MockPriceFeed.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,/Users/jadepaz/Desktop/CaatVerse/blockchain/contracts' running
+Compilation warnings/errors on contracts/MockPriceFeed.sol:
+/Users/jadepaz/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+'solc --version' running
+'solc @openzeppelin/=node_modules/@openzeppelin/ @chainlink/=node_modules/@chainlink/ contracts/CaatNFT.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,/Users/jadepaz/Desktop/CaatVerse/blockchain/contracts' running
+Compilation warnings/errors on contracts/CaatNFT.sol:
+/Users/jadepaz/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+'solc --version' running
+'solc @openzeppelin/=node_modules/@openzeppelin/ @chainlink/=node_modules/@chainlink/ contracts/CaatStaking.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,/Users/jadepaz/Desktop/CaatVerse/blockchain/contracts' running
+Compilation warnings/errors on contracts/CaatStaking.sol:
+/Users/jadepaz/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+'solc --version' running
+'solc @openzeppelin/=node_modules/@openzeppelin/ @chainlink/=node_modules/@chainlink/ contracts/CaatDAO.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,/Users/jadepaz/Desktop/CaatVerse/blockchain/contracts' running
+Compilation warnings/errors on contracts/CaatDAO.sol:
+/Users/jadepaz/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+'solc --version' running
+'solc @openzeppelin/=node_modules/@openzeppelin/ @chainlink/=node_modules/@chainlink/ contracts/CaatOracle.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,/Users/jadepaz/Desktop/CaatVerse/blockchain/contracts' running
+Compilation warnings/errors on contracts/CaatOracle.sol:
+/Users/jadepaz/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+'solc --version' running
+'solc @openzeppelin/=node_modules/@openzeppelin/ @chainlink/=node_modules/@chainlink/ contracts/CaatToken.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,/Users/jadepaz/Desktop/CaatVerse/blockchain/contracts' running
+Compilation warnings/errors on contracts/CaatToken.sol:
+/Users/jadepaz/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+INFO:Detectors:
+Detector: immutable-states
+MockPriceFeed.priceDecimals (contracts/MockPriceFeed.sol#6) should be immutable 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-immutable
+INFO:Detectors:
+Detector: incorrect-equality
+CaatStaking._claimReward(address) (contracts/CaatStaking.sol#72-85) uses a dangerous strict equality:
+	- reward == 0 (contracts/CaatStaking.sol#75)
+CaatStaking.calculateReward(address) (contracts/CaatStaking.sol#87-102) uses a dangerous strict equality:
+	- balance == 0 || stakingTimestamp[user] == 0 (contracts/CaatStaking.sol#90)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+INFO:Detectors:
+Detector: reentrancy-no-eth
+Reentrancy in CaatStaking.stake(uint256) (contracts/CaatStaking.sol#29-44):
+	External calls:
+	- _claimReward(msg.sender) (contracts/CaatStaking.sol#32)
+		- success = caatToken.transfer(user,reward) (contracts/CaatStaking.sol#81)
+	State variables written after the call(s):
+	- stakedBalance[msg.sender] += amount (contracts/CaatStaking.sol#34)
+	CaatStaking.stakedBalance (contracts/CaatStaking.sol#17) can be used in cross function reentrancies:
+	- CaatStaking.calculateReward(address) (contracts/CaatStaking.sol#87-102)
+	- CaatStaking.stakedBalance (contracts/CaatStaking.sol#17)
+	- stakingTimestamp[msg.sender] = block.timestamp (contracts/CaatStaking.sol#35)
+	CaatStaking.stakingTimestamp (contracts/CaatStaking.sol#18) can be used in cross function reentrancies:
+	- CaatStaking.calculateReward(address) (contracts/CaatStaking.sol#87-102)
+	- CaatStaking.stakingTimestamp (contracts/CaatStaking.sol#18)
+Reentrancy in CaatStaking.withdraw(uint256) (contracts/CaatStaking.sol#46-65):
+	External calls:
+	- _claimReward(msg.sender) (contracts/CaatStaking.sol#53)
+		- success = caatToken.transfer(user,reward) (contracts/CaatStaking.sol#81)
+	State variables written after the call(s):
+	- stakedBalance[msg.sender] -= amount (contracts/CaatStaking.sol#55)
+	CaatStaking.stakedBalance (contracts/CaatStaking.sol#17) can be used in cross function reentrancies:
+	- CaatStaking.calculateReward(address) (contracts/CaatStaking.sol#87-102)
+	- CaatStaking.stakedBalance (contracts/CaatStaking.sol#17)
+	- stakingTimestamp[msg.sender] = 0 (contracts/CaatStaking.sol#58)
+	CaatStaking.stakingTimestamp (contracts/CaatStaking.sol#18) can be used in cross function reentrancies:
+	- CaatStaking.calculateReward(address) (contracts/CaatStaking.sol#87-102)
+	- CaatStaking.stakingTimestamp (contracts/CaatStaking.sol#18)
+	- stakingTimestamp[msg.sender] = block.timestamp (contracts/CaatStaking.sol#60)
+	CaatStaking.stakingTimestamp (contracts/CaatStaking.sol#18) can be used in cross function reentrancies:
+	- CaatStaking.calculateReward(address) (contracts/CaatStaking.sol#87-102)
+	- CaatStaking.stakingTimestamp (contracts/CaatStaking.sol#18)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+INFO:Detectors:
+Detector: unused-return
+CaatOracle.getLatestETHPrice() (contracts/CaatOracle.sol#13-23) ignores return value by (None,price,None,None,None) = priceFeed.latestRoundData() (contracts/CaatOracle.sol#14-20)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+INFO:Detectors:
+Detector: timestamp
+CaatStaking.claimReward() (contracts/CaatStaking.sol#67-70) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(reward > 0,No reward available) (contracts/CaatStaking.sol#69)
+CaatStaking._claimReward(address) (contracts/CaatStaking.sol#72-85) uses timestamp for comparisons
+	Dangerous comparisons:
+	- reward == 0 (contracts/CaatStaking.sol#75)
+	- require(bool,string)(success,Reward transfer failed) (contracts/CaatStaking.sol#82)
+CaatStaking.calculateReward(address) (contracts/CaatStaking.sol#87-102) uses timestamp for comparisons
+	Dangerous comparisons:
+	- balance == 0 || stakingTimestamp[user] == 0 (contracts/CaatStaking.sol#90)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+INFO:Detectors:
+Detector: immutable-states
+CaatOracle.priceFeed (contracts/CaatOracle.sol#7) should be immutable 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-immutable
+INFO:Detectors:
+Detector: unused-return
+CaatOracle.getLatestETHPrice() (contracts/CaatOracle.sol#13-23) ignores return value by (None,price,None,None,None) = priceFeed.latestRoundData() (contracts/CaatOracle.sol#14-20)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+INFO:Detectors:
+Detector: immutable-states
+CaatOracle.priceFeed (contracts/CaatOracle.sol#7) should be immutable 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-immutable
+INFO:Slither:contracts analyzed (45 contracts with 100 detectors), 12 result(s) found
