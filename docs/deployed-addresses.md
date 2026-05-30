@@ -17,3 +17,4 @@ Rede utilizada: **Ethereum Sepolia**
 Esses contratos foram implantados na testnet **Sepolia** utilizando **Hardhat Ignition**.
 
 Além disso, todos os contratos foram verificados com sucesso no **Etherscan**, permitindo a visualização pública do código-fonte e a interação por meio das abas **Read Contract** e **Write Contract**.
+

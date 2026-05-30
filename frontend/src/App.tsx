@@ -630,268 +630,417 @@ function App() {
   }
 
   return (
-  <main className="caatverse-container">
-    <section className="hero-card">
-      <span className="project-tag">Web3 • Caatinga • Governança</span>
-
-      <h1>CaatVerse</h1>
-
-      <p className="project-description">
-        Uma experiência Web3 que une educação ambiental, NFTs, staking e
-        participação comunitária em um ecossistema inspirado na Caatinga.
-      </p>
-
-      <button className="wallet-button" onClick={connectWallet}>
-        {walletAddress ? 'Carteira conectada' : 'Conectar MetaMask'}
-      </button>
-
-      <p className="status-message">{statusMessage}</p>
-    </section>
-
-    {walletAddress && (
-      <section className="dashboard-grid">
-        <div className="section-card">
-          <h2>Carteira</h2>
-
-          <div className="info-row">
-            <span>Conta ativa</span>
-            <strong>{formatAddress(walletAddress)}</strong>
-          </div>
-
-          <div className="info-row">
-            <span>Rede</span>
-            <strong>{networkName}</strong>
-          </div>
+    <main className="caatverse-container">
+      <section className="hero-card">
+        <div className="hero-illustration">
+          <span className="sun"></span>
+          <span className="cloud cloud-one"></span>
+          <span className="cloud cloud-two"></span>
+          <span className="cactus cactus-one">🌵</span>
+          <span className="cactus cactus-two">🌿</span>
         </div>
 
-        {tokenName && (
-          <div className="section-card">
-            <h2>Token do ecossistema</h2>
+        <span className="project-tag">Web3 • Caatinga • Comunidade</span>
 
-            <div className="info-row">
-              <span>Nome</span>
-              <strong>{tokenName}</strong>
-            </div>
+        <h1>CaatVerse</h1>
 
-            <div className="info-row">
-              <span>Símbolo</span>
-              <strong>{tokenSymbol}</strong>
-            </div>
+        <p className="project-description">
+          Uma jornada digital inspirada na Caatinga, com colecionáveis,
+          pontos CAAT, recompensas e decisões comunitárias.
+        </p>
 
-            <div className="info-row">
-              <span>Seu saldo</span>
-              <strong>
-                {tokenBalance} {tokenSymbol}
-              </strong>
-            </div>
-          </div>
-        )}
+        <button className="wallet-button main-action" onClick={connectWallet}>
+          {walletAddress ? 'Carteira conectada' : 'Conectar carteira'}
+        </button>
 
-        <div className="section-card">
-          <h2>Mintar NFT</h2>
+        <p className="status-message">{statusMessage}</p>
+      </section>
 
-          <p className="section-description">
-            Crie um colecionável digital inspirado na Caatinga usando uma URI
-            de metadados.
-          </p>
-
-          <label htmlFor="tokenURI">URI do NFT</label>
-
-          <div className="form-row">
-            <input
-              id="tokenURI"
-              type="text"
-              value={nftTokenURI}
-              onChange={(event) => setNftTokenURI(event.target.value)}
-            />
-
-            <button
-              className="wallet-button"
-              onClick={mintNFT}
-              disabled={isMinting}
-            >
-              {isMinting ? 'Mintando...' : 'Mintar NFT'}
-            </button>
-          </div>
-
-          {mintStatus && <p className="status-message">{mintStatus}</p>}
+      <section className="steps-section">
+        <div className="section-heading">
+          <span>Primeiros passos</span>
+          <h2>Como funciona?</h2>
         </div>
 
-        <div className="section-card">
-          <h2>Staking do CaatVerse</h2>
-
-          <div className="info-row">
-            <span>Taxa atual</span>
-            <strong>{currentRewardRate}% ao ano</strong>
+        <div className="steps-grid">
+          <div className="step-card">
+            <span>1</span>
+            <strong>Conecte sua carteira</strong>
+            <p>Use a MetaMask para entrar no CaatVerse.</p>
           </div>
 
-          <div className="info-row">
-            <span>Saldo em staking</span>
-            <strong>{stakedBalance} CAAT</strong>
+          <div className="step-card">
+            <span>2</span>
+            <strong>Ganhe CAAT</strong>
+            <p>CAAT são seus pontos digitais no ecossistema.</p>
           </div>
 
-          <div className="info-row">
-            <span>Recompensa acumulada</span>
-            <strong>{pendingReward} CAAT</strong>
+          <div className="step-card">
+            <span>3</span>
+            <strong>Colecione espécies</strong>
+            <p>Crie NFTs inspirados na Caatinga.</p>
           </div>
 
-          <label htmlFor="stakingAmount">Quantidade de CAAT</label>
-
-          <div className="form-row">
-            <input
-              id="stakingAmount"
-              type="number"
-              min="0"
-              step="0.01"
-              placeholder="Ex.: 100"
-              value={stakingAmount}
-              onChange={(event) => setStakingAmount(event.target.value)}
-            />
+          <div className="step-card">
+            <span>4</span>
+            <strong>Vote na comunidade</strong>
+            <p>Participe das decisões com seus CAAT.</p>
           </div>
-
-          <div className="action-row">
-            <button
-              className="wallet-button"
-              onClick={approveStakingTokens}
-              disabled={isApproving}
-            >
-              {isApproving ? 'Aprovando...' : 'Aprovar CAAT'}
-            </button>
-
-            <button
-              className="wallet-button"
-              onClick={stakeTokens}
-              disabled={isStaking}
-            >
-              {isStaking ? 'Realizando staking...' : 'Fazer staking'}
-            </button>
-
-            <button
-              className="wallet-button"
-              onClick={withdrawTokens}
-              disabled={isWithdrawing}
-            >
-              {isWithdrawing ? 'Sacando...' : 'Sacar tokens'}
-            </button>
-
-            <button
-              className="wallet-button"
-              onClick={claimStakingReward}
-              disabled={isClaimingReward}
-            >
-              {isClaimingReward ? 'Resgatando...' : 'Resgatar recompensas'}
-            </button>
-          </div>
-
-          {stakingStatus && <p className="status-message">{stakingStatus}</p>}
-        </div>
-
-        <div className="section-card full-width">
-          <h2>Governança CaatDAO</h2>
-
-          <p className="section-description">
-            Crie propostas e participe das decisões do ecossistema com seus
-            tokens CAAT.
-          </p>
-
-          <label htmlFor="proposalDescription">Nova proposta</label>
-
-          <div className="form-row">
-            <input
-              id="proposalDescription"
-              type="text"
-              placeholder="Ex.: Criar uma nova coleção sobre o Mandacaru"
-              value={proposalDescription}
-              onChange={(event) => setProposalDescription(event.target.value)}
-            />
-
-            <button
-              className="wallet-button"
-              onClick={createProposal}
-              disabled={isCreatingProposal}
-            >
-              {isCreatingProposal ? 'Criando...' : 'Criar proposta'}
-            </button>
-          </div>
-
-          {daoStatus && <p className="status-message">{daoStatus}</p>}
-
-          <h3>Propostas</h3>
-
-          {proposals.length === 0 ? (
-            <p>Nenhuma proposta criada até o momento.</p>
-          ) : (
-            <div className="proposals-grid">
-              {proposals.map((proposal) => (
-                <div className="proposal-card" key={proposal.id}>
-                  <h3>Proposta #{proposal.id}</h3>
-
-                  <p>{proposal.description}</p>
-
-                  <div className="info-row">
-                    <span>Status</span>
-                    <strong>{proposal.active ? 'Ativa' : 'Encerrada'}</strong>
-                  </div>
-
-                  <div className="info-row">
-                    <span>Votos a favor</span>
-                    <strong>{proposal.votesFor} CAAT</strong>
-                  </div>
-
-                  <div className="info-row">
-                    <span>Votos contra</span>
-                    <strong>{proposal.votesAgainst} CAAT</strong>
-                  </div>
-
-                  <div className="info-row">
-                    <span>Seu voto</span>
-                    <strong>
-                      {proposal.hasUserVoted
-                        ? 'Já registrado'
-                        : 'Ainda não votou'}
-                    </strong>
-                  </div>
-
-                  <div className="action-row">
-                    <button
-                      className="wallet-button"
-                      onClick={() => voteOnProposal(proposal.id, true)}
-                      disabled={
-                        isVoting || !proposal.active || proposal.hasUserVoted
-                      }
-                    >
-                      Votar a favor
-                    </button>
-
-                    <button
-                      className="wallet-button"
-                      onClick={() => voteOnProposal(proposal.id, false)}
-                      disabled={
-                        isVoting || !proposal.active || proposal.hasUserVoted
-                      }
-                    >
-                      Votar contra
-                    </button>
-
-                    <button
-                      className="wallet-button"
-                      onClick={() => closeProposal(proposal.id)}
-                      disabled={isClosingProposal || !proposal.active}
-                    >
-                      {isClosingProposal
-                        ? 'Encerrando...'
-                        : 'Encerrar proposta'}
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </section>
-    )}
-  </main>
-)
+
+      {walletAddress && (
+        <>
+          <section className="section-group">
+            <div className="section-heading">
+              <span>Início</span>
+              <h2>Minha jornada</h2>
+            </div>
+
+            <div className="journey-grid">
+              <div className="section-card wallet-summary-card">
+                <div className="card-icon">👛</div>
+                <h2>Minha carteira</h2>
+
+                <div className="info-row">
+                  <span>Conta conectada</span>
+                  <strong>{formatAddress(walletAddress)}</strong>
+                </div>
+
+                <div className="info-row">
+                  <span>Rede atual</span>
+                  <strong>{networkName}</strong>
+                </div>
+              </div>
+
+              {tokenName && (
+                <div className="section-card points-card">
+                  <div className="card-icon">🌱</div>
+                  <h2>Meus pontos CAAT</h2>
+
+                  <p className="section-description">
+                    Use CAAT para aplicar, resgatar recompensas e votar na comunidade.
+                  </p>
+
+                  <div className="big-number">
+                    {tokenBalance} <span>{tokenSymbol}</span>
+                  </div>
+                </div>
+              )}
+
+              <div className="section-card rewards-card">
+                <div className="card-icon">🏜️</div>
+                <h2>Atividades de hoje</h2>
+
+                <div className="activity-mini-row">
+                  <span>Explorar o CaatVerse</span>
+                  <strong>+20 CAAT</strong>
+                </div>
+
+                <div className="activity-mini-row">
+                  <span>Criar colecionável</span>
+                  <strong>+1 NFT</strong>
+                </div>
+
+                <div className="activity-mini-row">
+                  <span>Participar da DAO</span>
+                  <strong>+10 CAAT</strong>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="section-group">
+            <div className="section-heading">
+              <span>Coleção</span>
+              <h2>Colecionáveis da Caatinga</h2>
+            </div>
+
+            <div className="collectibles-grid">
+              <div className="collectible-card">
+                <div className="collectible-art mandacaru">🌵</div>
+                <strong>Mandacaru</strong>
+                <span>Raro</span>
+              </div>
+
+              <div className="collectible-card">
+                <div className="collectible-art xique">🌿</div>
+                <strong>Xique-xique</strong>
+                <span>Incomum</span>
+              </div>
+
+              <div className="collectible-card">
+                <div className="collectible-art carnauba">🌴</div>
+                <strong>Carnaúba</strong>
+                <span>Raro</span>
+              </div>
+
+              <div className="collectible-card">
+                <div className="collectible-art dunes">☀️</div>
+                <strong>Dunas do sol</strong>
+                <span>Comum</span>
+              </div>
+            </div>
+          </section>
+
+          <section className="section-group">
+            <div className="section-heading">
+              <span>Ações</span>
+              <h2>Continue sua jornada</h2>
+            </div>
+
+            <div className="dashboard-grid">
+              <div className="section-card">
+                <div className="card-icon">🪴</div>
+                <h2>Criar colecionável</h2>
+
+                <p className="section-description">
+                  Transforme uma espécie ou símbolo da Caatinga em um NFT.
+                </p>
+
+                <label htmlFor="tokenURI">Endereço do colecionável</label>
+
+                <div className="form-row">
+                  <input
+                    id="tokenURI"
+                    type="text"
+                    value={nftTokenURI}
+                    onChange={(event) => setNftTokenURI(event.target.value)}
+                  />
+
+                  <button
+                    className="wallet-button"
+                    onClick={mintNFT}
+                    disabled={isMinting}
+                  >
+                    {isMinting ? 'Criando...' : 'Criar'}
+                  </button>
+                </div>
+
+                {mintStatus && <p className="status-message">{mintStatus}</p>}
+              </div>
+
+              <div className="section-card">
+                <div className="card-icon">🌾</div>
+                <h2>Recompensas CAAT</h2>
+
+                <p className="section-description">
+                  Aplique seus CAAT e acompanhe suas recompensas no ecossistema.
+                </p>
+
+                <div className="info-row">
+                  <span>Taxa atual</span>
+                  <strong>{currentRewardRate}% ao ano</strong>
+                </div>
+
+                <div className="info-row">
+                  <span>CAAT aplicados</span>
+                  <strong>{stakedBalance} CAAT</strong>
+                </div>
+
+                <div className="info-row">
+                  <span>Recompensa acumulada</span>
+                  <strong>{pendingReward} CAAT</strong>
+                </div>
+
+                <label htmlFor="stakingAmount">Quantidade para aplicar</label>
+
+                <div className="form-row">
+                  <input
+                    id="stakingAmount"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="Ex.: 100"
+                    value={stakingAmount}
+                    onChange={(event) => setStakingAmount(event.target.value)}
+                  />
+                </div>
+
+                <div className="action-row">
+                  <button
+                    className="wallet-button"
+                    onClick={approveStakingTokens}
+                    disabled={isApproving}
+                  >
+                    {isApproving ? 'Permitindo...' : 'Permitir CAAT'}
+                  </button>
+
+                  <button
+                    className="wallet-button"
+                    onClick={stakeTokens}
+                    disabled={isStaking}
+                  >
+                    {isStaking ? 'Aplicando...' : 'Aplicar'}
+                  </button>
+
+                  <button
+                    className="wallet-button"
+                    onClick={withdrawTokens}
+                    disabled={isWithdrawing}
+                  >
+                    {isWithdrawing ? 'Retirando...' : 'Retirar'}
+                  </button>
+
+                  <button
+                    className="wallet-button"
+                    onClick={claimStakingReward}
+                    disabled={isClaimingReward}
+                  >
+                    {isClaimingReward ? 'Resgatando...' : 'Resgatar'}
+                  </button>
+                </div>
+
+                {stakingStatus && <p className="status-message">{stakingStatus}</p>}
+              </div>
+            </div>
+          </section>
+
+          <section className="section-card full-width community-card">
+            <div className="section-heading">
+              <span>Comunidade</span>
+              <h2>Decisões do CaatVerse</h2>
+            </div>
+
+            <p className="section-description">
+              Crie propostas e vote nas decisões da comunidade usando seus CAAT.
+            </p>
+
+            <label htmlFor="proposalDescription">Nova proposta</label>
+
+            <div className="form-row">
+              <input
+                id="proposalDescription"
+                type="text"
+                placeholder="Ex.: Criar uma coleção sobre o Mandacaru"
+                value={proposalDescription}
+                onChange={(event) => setProposalDescription(event.target.value)}
+              />
+
+              <button
+                className="wallet-button"
+                onClick={createProposal}
+                disabled={isCreatingProposal}
+              >
+                {isCreatingProposal ? 'Criando...' : 'Criar proposta'}
+              </button>
+            </div>
+
+            {daoStatus && <p className="status-message">{daoStatus}</p>}
+
+            <h3>Propostas da comunidade</h3>
+
+            {proposals.length === 0 ? (
+              <p>Nenhuma proposta criada até o momento.</p>
+            ) : (
+              <div className="proposals-grid">
+                {proposals.map((proposal) => (
+                  <div className="proposal-card" key={proposal.id}>
+                    <div>
+                      <h3>Proposta #{proposal.id}</h3>
+                      <p>{proposal.description}</p>
+                    </div>
+
+                    <div className="proposal-details">
+                      <div className="info-row">
+                        <span>Status</span>
+                        <strong>{proposal.active ? 'Ativa' : 'Encerrada'}</strong>
+                      </div>
+
+                      <div className="info-row">
+                        <span>Votos a favor</span>
+                        <strong>{proposal.votesFor} CAAT</strong>
+                      </div>
+
+                      <div className="info-row">
+                        <span>Votos contra</span>
+                        <strong>{proposal.votesAgainst} CAAT</strong>
+                      </div>
+
+                      <div className="info-row">
+                        <span>Seu voto</span>
+                        <strong>
+                          {proposal.hasUserVoted
+                            ? 'Já registrado'
+                            : 'Ainda não votou'}
+                        </strong>
+                      </div>
+                    </div>
+
+                    <div className="action-row">
+                      <button
+                        className="wallet-button"
+                        onClick={() => voteOnProposal(proposal.id, true)}
+                        disabled={
+                          isVoting || !proposal.active || proposal.hasUserVoted
+                        }
+                      >
+                        Votar a favor
+                      </button>
+
+                      <button
+                        className="wallet-button"
+                        onClick={() => voteOnProposal(proposal.id, false)}
+                        disabled={
+                          isVoting || !proposal.active || proposal.hasUserVoted
+                        }
+                      >
+                        Votar contra
+                      </button>
+
+                      <button
+                        className="wallet-button"
+                        onClick={() => closeProposal(proposal.id)}
+                        disabled={isClosingProposal || !proposal.active}
+                      >
+                        {isClosingProposal ? 'Encerrando...' : 'Encerrar'}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          <section className="section-group">
+            <div className="section-heading">
+              <span>Histórico</span>
+              <h2>Atividade recente</h2>
+            </div>
+
+            <div className="activity-list">
+              <div className="activity-row">
+                <span>🌱</span>
+                <div>
+                  <strong>Carteira conectada</strong>
+                  <p>Você entrou na jornada CaatVerse.</p>
+                </div>
+                <small>+10 CAAT</small>
+              </div>
+
+              <div className="activity-row">
+                <span>🌵</span>
+                <div>
+                  <strong>Colecionável criado</strong>
+                  <p>Mandacaru registrado como NFT.</p>
+                </div>
+                <small>+1 NFT</small>
+              </div>
+
+              <div className="activity-row">
+                <span>🗳️</span>
+                <div>
+                  <strong>Voto comunitário</strong>
+                  <p>Participação registrada na DAO.</p>
+                </div>
+                <small>+5 CAAT</small>
+              </div>
+            </div>
+          </section>
+        </>
+      )}
+    </main>
+  )
 }
 
 export default App
