@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   BrowserProvider,
   Contract,
@@ -8,6 +8,7 @@ import {
 import { CONTRACT_ADDRESSES, SEPOLIA_CHAIN_ID } from './contracts/addresses'
 import { CONTRACT_ABIS } from './contracts/abis'
 import './App.css'
+import logoCaatVerse from "./assets/logo-caatverse.png";
 
 function App() {
   const [walletAddress, setWalletAddress] = useState<string>('')
@@ -15,6 +16,54 @@ function App() {
   const [statusMessage, setStatusMessage] = useState<string>(
     'Conecte sua carteira para começar a explorar o CaatVerse.'
   )
+
+  const [isTutorialOpen, setIsTutorialOpen] = useState(false)
+  const [tutorialStep, setTutorialStep] = useState(0)
+
+useEffect(() => {
+  if (walletAddress) {
+    document.body.classList.remove('wallet-disconnected')
+  } else {
+    document.body.classList.add('wallet-disconnected')
+  }
+
+  return () => {
+    document.body.classList.remove('wallet-disconnected')
+  }
+}, [walletAddress])
+
+const tutorialCards = [
+  {
+    number: '1',
+    title: 'Sua carteira é sua entrada',
+    text: 'Conecte a MetaMask para acessar o CaatVerse. Ela identifica você dentro da experiência.'
+  },
+  {
+    number: '2',
+    title: 'CAAT serve como suas moedas',
+    text: 'Os CAAT funcionam como moedas da experiência, elas são utilizadas para interagir com o ecossistema.'
+  },
+  {
+    number: '3',
+    title: 'Colecionáveis',
+    text: 'Você pode transformar espécies e símbolos da Caatinga em colecionáveis digitais. Alguns podem representar espécies ameaçadas, ajudando a valorizar e preservar sua memória dentro da experiência.'
+  },
+  {
+    number: '4',
+    title: 'Staking é aplicar CAAT',
+    text: 'Ao aplicar seus CAAT no staking, eles ficam guardados no sistema e podem gerar recompensas com o tempo.'
+  },
+  {
+    number: '5',
+    title: 'Resgate recompensas',
+    text: 'Quando houver recompensa acumulada, você pode resgatar sem precisar retirar todos os CAAT aplicados.'
+  },
+  {
+    number: '6',
+    title: 'Vote na comunidade',
+    text: 'Com seus CAAT, você pode participar de decisões e propostas dentro da comunidade do CaatVerse.'
+  }
+]
 
   const [tokenName, setTokenName] = useState<string>('')
   const [tokenSymbol, setTokenSymbol] = useState<string>('')
@@ -207,6 +256,12 @@ function App() {
       await loadDaoData(provider, address)
 
       setStatusMessage('Carteira conectada na rede Sepolia com sucesso!')
+      setTimeout(() => {
+        document.getElementById('minha-jornada')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        })
+      }, 500)
     } catch (error) {
       console.error('Erro ao conectar carteira:', error)
       setStatusMessage('Não foi possível conectar a carteira.')
@@ -630,72 +685,57 @@ function App() {
   }
 
   return (
-    <main className="caatverse-container">
-      <section className="hero-card">
-        <div className="hero-illustration">
-          <span className="sun"></span>
-          <span className="cloud cloud-one"></span>
-          <span className="cloud cloud-two"></span>
-          <span className="cactus cactus-one">🌵</span>
-          <span className="cactus cactus-two">🌿</span>
-        </div>
+  <main className={`caatverse-container ${walletAddress ? "wallet-connected" : "wallet-disconnected"}`}>
+  <section className="hero-card">
+    <div className="hero-illustration">
+      <span className="sun"></span>
+      <span className="cloud cloud-one"></span>
+      <span className="cloud cloud-two"></span>
+      <span className="cactus cactus-one">🌵</span>
+      <span className="cactus cactus-two">🌿</span>
+    </div>
 
         <span className="project-tag">Web3 • Caatinga • Comunidade</span>
 
-        <h1>CaatVerse</h1>
+              <img
+                  src={logoCaatVerse}
+                  alt="CaatVerse"
+                  className="caatverse-logo"
+              /> 
 
         <p className="project-description">
-          Uma jornada digital inspirada na Caatinga, com colecionáveis,
-          pontos CAAT, recompensas e decisões comunitárias.
+          Venha viver uma jornada digital inspirada na Caatinga, com colecionáveis, pontos CAAT, 
+          recompensas e decisões comunitárias.
         </p>
 
-        <button className="wallet-button main-action" onClick={connectWallet}>
-          {walletAddress ? 'Carteira conectada' : 'Conectar carteira'}
-        </button>
+        <div className="hero-actions-vertical">
+          <button className="wallet-button main-action" onClick={connectWallet}>
+            {walletAddress ? 'Carteira conectada' : 'Conectar carteira'}
+          </button>
+
+            <button
+              className="tutorial-button"
+              type="button"
+              onClick={() => {
+                setTutorialStep(0)
+                setIsTutorialOpen(true)
+              }}
+            >
+              Tutorial
+            </button>
+        </div>
 
         <p className="status-message">{statusMessage}</p>
       </section>
 
-      <section className="steps-section">
-        <div className="section-heading">
-          <span>Primeiros passos</span>
-          <h2>Como funciona?</h2>
-        </div>
-
-        <div className="steps-grid">
-          <div className="step-card">
-            <span>1</span>
-            <strong>Conecte sua carteira</strong>
-            <p>Use a MetaMask para entrar no CaatVerse.</p>
-          </div>
-
-          <div className="step-card">
-            <span>2</span>
-            <strong>Ganhe CAAT</strong>
-            <p>CAAT são seus pontos digitais no ecossistema.</p>
-          </div>
-
-          <div className="step-card">
-            <span>3</span>
-            <strong>Colecione espécies</strong>
-            <p>Crie NFTs inspirados na Caatinga.</p>
-          </div>
-
-          <div className="step-card">
-            <span>4</span>
-            <strong>Vote na comunidade</strong>
-            <p>Participe das decisões com seus CAAT.</p>
-          </div>
-        </div>
-      </section>
 
       {walletAddress && (
         <>
-          <section className="section-group">
-            <div className="section-heading">
-              <span>Início</span>
-              <h2>Minha jornada</h2>
-            </div>
+            <section id="minha-jornada" className="section-group">
+              <div className="section-heading">
+                <span>Início</span>
+                <h2>Minha jornada</h2>
+              </div>
 
             <div className="journey-grid">
               <div className="section-card wallet-summary-card">
@@ -753,7 +793,7 @@ function App() {
           <section className="section-group">
             <div className="section-heading">
               <span>Coleção</span>
-              <h2>Colecionáveis da Caatinga</h2>
+              <h2>Meus colecionáveis</h2>
             </div>
 
             <div className="collectibles-grid">
@@ -1039,6 +1079,62 @@ function App() {
           </section>
         </>
       )}
+
+        {isTutorialOpen && (
+          <div className="tutorial-overlay">
+            <div className="tutorial-card">
+              <button
+                className="tutorial-close"
+                type="button"
+                onClick={() => setIsTutorialOpen(false)}
+              >
+                ×
+              </button>
+
+              <div className="tutorial-number">
+                {tutorialCards[tutorialStep].number}
+              </div>
+
+              <h2>{tutorialCards[tutorialStep].title}</h2>
+
+              <p>{tutorialCards[tutorialStep].text}</p>
+
+              <div className="tutorial-progress">
+                {tutorialCards.map((_, index) => (
+                  <span
+                    key={index}
+                    className={index === tutorialStep ? 'active' : ''}
+                  />
+                ))}
+              </div>
+
+              <div className="tutorial-controls">
+                <button
+                  type="button"
+                  className="tutorial-nav-button"
+                  disabled={tutorialStep === 0}
+                  onClick={() => setTutorialStep((prev) => prev - 1)}
+                >
+                  Voltar
+                </button>
+
+                <button
+                  type="button"
+                  className="tutorial-nav-button"
+                  onClick={() => {
+                    if (tutorialStep === tutorialCards.length - 1) {
+                      setIsTutorialOpen(false)
+                    } else {
+                      setTutorialStep((prev) => prev + 1)
+                    }
+                  }}
+                >
+                  {tutorialStep === tutorialCards.length - 1 ? 'Começar' : 'Próximo'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
     </main>
   )
 }
