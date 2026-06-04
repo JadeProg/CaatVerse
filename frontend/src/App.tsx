@@ -9,6 +9,7 @@ import { CONTRACT_ADDRESSES, SEPOLIA_CHAIN_ID } from './contracts/addresses'
 import { CONTRACT_ABIS } from './contracts/abis'
 import './App.css'
 import logoCaatVerse from "./assets/logo-caatverse.png";
+import caatVerse3DImage from "./assets/CaatVerse3D.png";
 
 function App() {
   const [walletAddress, setWalletAddress] = useState<string>('')
@@ -1041,6 +1042,28 @@ const tutorialCards = [
               </div>
             )}
           </section>
+          
+                            <section className="section-group">
+                              <div className="section-heading">
+                                <span>Novidades do sistema</span>
+                                <h2>Santuário das Espécies</h2>
+                              </div>
+
+                              <a
+                                className="experience-card"
+                                href="https://jadeprog.github.io/CaatVerse3D/"
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                <div className="experience-card-image-wrapper">
+                                  <img
+                                    src={caatVerse3DImage}
+                                    alt="Prévia da experiência 3D do CaatVerse"
+                                    className="experience-card-image"
+                                  />
+                                </div>
+                              </a>
+                            </section>
 
           <section className="section-group">
             <div className="section-heading">

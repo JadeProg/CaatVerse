@@ -2221,3 +2221,127 @@ body.wallet-disconnected .caatverse-container {
   height: 100vh;
   overflow: hidden;
 }
+
+.experience-card {
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  text-decoration: none;
+}
+
+.experience-card-image-wrapper {
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 26px 26px 0 0;
+  background: #dba06f;
+}
+
+.experience-card-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.experience-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 26px 32px;
+}
+
+.experience-card-footer h2 {
+  margin: 0 0 8px;
+  color: #2f4b29;
+  font-size: 1.45rem;
+  font-weight: 900;
+}
+
+.experience-card-footer p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+@media (max-width: 780px) {
+  .experience-card-image-wrapper {
+    height: 220px;
+  }
+
+  .experience-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .experience-card-action {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* =========================================================
+   CARD EXPERIÊNCIA 3D COM IMAGEM
+   ========================================================= */
+
+.experience-card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  text-decoration: none;
+  border-radius: 28px;
+
+  border: 2px solid rgba(104, 113, 58, 0.22);
+
+  box-shadow:
+    0 10px 0 rgba(126, 117, 67, 0.25),
+    0 22px 34px rgba(73, 84, 44, 0.14);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 13px 0 rgba(126, 117, 67, 0.3),
+    0 28px 42px rgba(73, 84, 44, 0.18);
+}
+
+.experience-card-image-wrapper {
+  display: block !important;
+  width: 100%;
+  height: 360px;
+  overflow: hidden;
+  border-radius: 28px;
+  background: #d87976;
+}
+
+.experience-card-image {
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Esconde versão antiga feita em CSS */
+.experience-illustration-simple,
+.experience-simple-logo-image,
+.experience-simple-text,
+.experience-simple-button,
+.experience-card-footer,
+.experience-card-action {
+  display: none !important;
+}
+
+@media (max-width: 780px) {
+  .experience-card-image-wrapper {
+    height: 240px;
+  }
+}
